@@ -32,6 +32,9 @@
 		"fix": [
 			"minus-x fix .",
 			"phpcbf"
+		],
+		"phpunit": [
+			"../../../tests/phpunit/phpunit.php -c .phpunit.xml"
 		]
 	}
 }
