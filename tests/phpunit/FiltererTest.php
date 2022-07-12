@@ -2,8 +2,9 @@
 
 namespace MWStake\MediaWiki\Component\DataStore\Tests;
 
-use \MWStake\MediaWiki\Component\DataStore\Filter;
-use \MWStake\MediaWiki\Component\DataStore\Filterer;
+use MWStake\MediaWiki\Component\DataStore\Filter;
+use MWStake\MediaWiki\Component\DataStore\Filterer;
+use MWStake\MediaWiki\Component\DataStore\Record;
 
 class FiltererTest extends \PHPUnit\Framework\TestCase {
 	protected $testDataSets = [

@@ -2,8 +2,8 @@
 
 namespace MWStake\MediaWiki\Component\DataStore\Filter;
 
-use MWStake\MediaWiki\Component\DataStore\Filter;
 use BsStringHelper;
+use MWStake\MediaWiki\Component\DataStore\Filter;
 
 /**
  * Class name "String" is reserved
