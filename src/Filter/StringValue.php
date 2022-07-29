@@ -45,9 +45,9 @@ class StringValue extends Filter {
 	 * @param string $sOp - comparison option
 	 * @param string $sHaystack
 	 * @param string $sNeedle
-	 * @return boolean
+	 * @return bool
 	 */
-	private function compareStrings( string $sOp, string $sHaystack, string $sNeedle): bool {
+	private function compareStrings( string $sOp, string $sHaystack, string $sNeedle ): bool {
 		$sHaystack = mb_strtolower( $sHaystack );
 		$sNeedle = mb_strtolower( $sNeedle );
 
@@ -66,7 +66,7 @@ class StringValue extends Filter {
 			case self::COMPARISON_NOT_EQUALS:
 				return $sHaystack !== $sNeedle;
 			default:
-				return false;	
+				return false;
 		}
 	}
 }
