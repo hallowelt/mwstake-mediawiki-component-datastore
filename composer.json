@@ -33,8 +33,8 @@
 			"minus-x fix .",
 			"phpcbf"
 		],
-		"phpunit": [
-			"../../../tests/phpunit/phpunit.php -c .phpunit.xml"
+		"unittest": [
+			"../../../tests/phpunit/phpunit.php tests/phpunit"
 		]
 	}
 }
