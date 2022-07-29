@@ -42,29 +42,29 @@ class StringValue extends Filter {
 	/**
 	 * Case-insensitive optional string comparison function
 	 *
-	 * @param string $sOp - comparison option
-	 * @param string $sHaystack
-	 * @param string $sNeedle
+	 * @param string $operation - comparison option
+	 * @param string $haystack
+	 * @param string $needle
 	 * @return bool
 	 */
-	private function compareStrings( string $sOp, string $sHaystack, string $sNeedle ): bool {
-		$sHaystack = mb_strtolower( $sHaystack );
-		$sNeedle = mb_strtolower( $sNeedle );
+	private function compareStrings( string $operation, string $haystack, string $needle ): bool {
+		$haystack = mb_strtolower( $haystack );
+		$needle = mb_strtolower( $needle );
 
-		switch ( $sOp ) {
+		switch ( $operation ) {
 			case self::COMPARISON_STARTS_WITH:
-				return str_starts_with( $sHaystack, $sNeedle );
+				return str_starts_with( $haystack, $needle );
 			case self::COMPARISON_ENDS_WITH:
-				return str_ends_with( $sHaystack, $sNeedle );
+				return str_ends_with( $haystack, $needle );
 			case self::COMPARISON_CONTAINS:
 			case self::COMPARISON_LIKE:
-				return str_contains( $sHaystack, $sNeedle );
+				return str_contains( $haystack, $needle );
 			case self::COMPARISON_NOT_CONTAINS:
-				return !str_contains( $sHaystack, $sNeedle );
+				return !str_contains( $haystack, $needle );
 			case self::COMPARISON_EQUALS:
-				return $sHaystack === $sNeedle;
+				return $haystack === $needle;
 			case self::COMPARISON_NOT_EQUALS:
-				return $sHaystack !== $sNeedle;
+				return $haystack !== $needle;
 			default:
 				return false;
 		}
