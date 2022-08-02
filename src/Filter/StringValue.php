@@ -53,14 +53,19 @@ class StringValue extends Filter {
 
 		switch ( $operation ) {
 			case self::COMPARISON_STARTS_WITH:
-				return str_starts_with( $haystack, $needle );
+				return $needle === '' ||
+					strrpos( $haystack, $needle, - strlen( $haystack ) ) !== false;
 			case self::COMPARISON_ENDS_WITH:
-				return str_ends_with( $haystack, $needle );
+				$needleLen = strlen( $needle );
+				if ( $needleLen < 1 ) {
+					return true;
+				}
+				return substr( $haystack, -$needleLen ) === $needle;
 			case self::COMPARISON_CONTAINS:
 			case self::COMPARISON_LIKE:
-				return str_contains( $haystack, $needle );
+				return strpos( $haystack, $needle ) !== false;
 			case self::COMPARISON_NOT_CONTAINS:
-				return !str_contains( $haystack, $needle );
+				return strpos( $haystack, $needle ) === false;
 			case self::COMPARISON_EQUALS:
 				return $haystack === $needle;
 			case self::COMPARISON_NOT_EQUALS:
