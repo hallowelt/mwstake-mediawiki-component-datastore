@@ -25,7 +25,7 @@ class BooleanTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	/**
-	 * @covers \BlueSpice\Data\Filter\Boolean::matches
+	 * @covers MWStake\MediaWiki\Component\DataStore\Filter\Boolean::matches
 	 */
 	public function testNegative() {
 		$filter = new Filter\Boolean( [

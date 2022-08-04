@@ -2,7 +2,6 @@
 
 namespace MWStake\MediaWiki\Component\DataStore\Filter;
 
-use BsStringHelper;
 use MWStake\MediaWiki\Component\DataStore\Filter;
 
 /**
@@ -11,10 +10,7 @@ use MWStake\MediaWiki\Component\DataStore\Filter;
 class StringValue extends Filter {
 	public const COMPARISON_STARTS_WITH = 'sw';
 	public const COMPARISON_ENDS_WITH = 'ew';
-	public const COMPARISON_CONTAINS = 'ct';
 	public const COMPARISON_NOT_CONTAINS = 'nct';
-
-	public const COMPARISON_LIKE = 'like';
 
 	/**
 	 * Performs string filtering based on given filter of type string on a
@@ -31,7 +27,7 @@ class StringValue extends Filter {
 			if ( !is_scalar( $fieldValue ) ) {
 				continue;
 			}
-			$res = BsStringHelper::filter(
+			$res = $this->compareStrings(
 				$this->getComparison(),
 				(string)$fieldValue,
 				$this->getValue()
@@ -41,5 +37,41 @@ class StringValue extends Filter {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Case-insensitive optional string comparison function
+	 *
+	 * @param string $operation - comparison option
+	 * @param string $haystack
+	 * @param string $needle
+	 * @return bool
+	 */
+	private function compareStrings( string $operation, string $haystack, string $needle ): bool {
+		$haystack = mb_strtolower( $haystack );
+		$needle = mb_strtolower( $needle );
+
+		switch ( $operation ) {
+			case self::COMPARISON_STARTS_WITH:
+				return $needle === '' ||
+					strrpos( $haystack, $needle, - strlen( $haystack ) ) !== false;
+			case self::COMPARISON_ENDS_WITH:
+				$needleLen = strlen( $needle );
+				if ( $needleLen < 1 ) {
+					return true;
+				}
+				return substr( $haystack, -$needleLen ) === $needle;
+			case self::COMPARISON_CONTAINS:
+			case self::COMPARISON_LIKE:
+				return strpos( $haystack, $needle ) !== false;
+			case self::COMPARISON_NOT_CONTAINS:
+				return strpos( $haystack, $needle ) === false;
+			case self::COMPARISON_EQUALS:
+				return $haystack === $needle;
+			case self::COMPARISON_NOT_EQUALS:
+				return $haystack !== $needle;
+			default:
+				return false;
+		}
 	}
 }

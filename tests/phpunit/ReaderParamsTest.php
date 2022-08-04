@@ -2,7 +2,10 @@
 
 namespace MWStake\MediaWiki\Component\DataStore\Tests;
 
+use MWStake\MediaWiki\Component\DataStore\Filter;
+use MWStake\MediaWiki\Component\DataStore\Filter\StringValue;
 use MWStake\MediaWiki\Component\DataStore\ReaderParams;
+use MWStake\MediaWiki\Component\DataStore\Sort;
 
 class ReaderParamsTest extends \PHPUnit\Framework\TestCase {
 	/**
@@ -32,7 +35,7 @@ class ReaderParamsTest extends \PHPUnit\Framework\TestCase {
 			]
 		] );
 
-		$this->assertInstanceOf( '\BlueSpice\Data\ReaderParams', $params );
+		$this->assertInstanceOf( ReaderParams::class, $params );
 
 		// TODO: Split test
 		$this->assertEquals( 'Some query', $params->getQuery() );
@@ -43,11 +46,11 @@ class ReaderParamsTest extends \PHPUnit\Framework\TestCase {
 		$this->assertEquals( 2, count( $sort ) );
 		$firstSort = $sort[0];
 		$this->assertInstanceOf(
-			'\BlueSpice\Data\Sort',  $firstSort
+			Sort::class, $firstSort
 		);
 
 		$this->assertEquals(
-			\BlueSpice\Data\Sort::ASCENDING,
+			Sort::ASCENDING,
 			$firstSort->getDirection()
 		);
 
@@ -56,11 +59,11 @@ class ReaderParamsTest extends \PHPUnit\Framework\TestCase {
 
 		$firstFilter = $filter[0];
 		$this->assertInstanceOf(
-			'\BlueSpice\Data\Filter',  $firstFilter
+			Filter::class, $firstFilter
 		);
 
 		$this->assertEquals(
-			\BlueSpice\Data\Filter\StringValue::COMPARISON_CONTAINS,
+			StringValue::COMPARISON_CONTAINS,
 			$firstFilter->getComparison()
 		);
 
