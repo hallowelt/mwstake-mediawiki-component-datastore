@@ -2,6 +2,8 @@
 
 namespace MWStake\MediaWiki\Component\DataStore;
 
+use Status;
+
 interface IRecord {
 
 	/**
@@ -24,7 +26,7 @@ interface IRecord {
 	public function getData();
 
 	/**
-	 * @return \Status
+	 * @return Status
 	 */
 	public function getStatus();
 }
