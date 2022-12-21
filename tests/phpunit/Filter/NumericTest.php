@@ -4,13 +4,14 @@ namespace MWStake\MediaWiki\Component\DataStore\Tests\Filter;
 
 use MWStake\MediaWiki\Component\DataStore\Filter;
 use MWStake\MediaWiki\Component\DataStore\Record;
+use PHPUnit\Framework\TestCase;
 
-class NumericTest extends \PHPUnit\Framework\TestCase {
+class NumericValueTest extends TestCase {
 	/**
-	 * @covers \MWStake\MediaWiki\Component\DataStore\Filter\Numeric::matches
+	 * @covers \MWStake\MediaWiki\Component\DataStore\Filter\NumericValue::matches
 	 */
 	public function testPositive() {
-		$filter = new Filter\Numeric( [
+		$filter = new Filter\NumericValue( [
 			'field' => 'field1',
 			'comparison' => 'gt',
 			'value' => 5
@@ -25,10 +26,10 @@ class NumericTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	/**
-	 * @covers \MWStake\MediaWiki\Component\DataStore\Filter\Numeric::matches
+	 * @covers \MWStake\MediaWiki\Component\DataStore\Filter\NumericValue::matches
 	 */
 	public function testNegative() {
-		$filter = new Filter\Numeric( [
+		$filter = new Filter\NumericValue( [
 			'field' => 'field1',
 			'comparison' => 'gt',
 			'value' => 5

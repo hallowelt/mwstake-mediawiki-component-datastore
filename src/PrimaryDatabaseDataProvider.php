@@ -2,7 +2,7 @@
 
 namespace MWStake\MediaWiki\Component\DataStore;
 
-use MWStake\MediaWiki\Component\DataStore\Filter\Numeric;
+use MWStake\MediaWiki\Component\DataStore\Filter\NumericValue;
 use MWStake\MediaWiki\Component\DataStore\Filter\StringValue;
 use Wikimedia\Rdbms\IDatabase;
 
@@ -145,10 +145,10 @@ abstract class PrimaryDatabaseDataProvider implements IPrimaryDataProvider {
 					$filter->getValue()
 				);
 				break;
-			case Numeric::COMPARISON_GREATER_THAN:
+			case NumericValue::COMPARISON_GREATER_THAN:
 				$conds[] = "{$filter->getValue()} > {$filter->getField()}";
 				break;
-			case Numeric::COMPARISON_LOWER_THAN:
+			case NumericValue::COMPARISON_LOWER_THAN:
 				$conds[] = "{$filter->getValue()} < {$filter->getField()}";
 				break;
 			default:
