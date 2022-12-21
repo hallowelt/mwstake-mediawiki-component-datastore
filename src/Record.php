@@ -2,7 +2,9 @@
 
 namespace MWStake\MediaWiki\Component\DataStore;
 
-class Record implements IRecord, \JsonSerializable {
+use JsonSerializable;
+
+class Record implements IRecord, JsonSerializable {
 
 	/**
 	 *
@@ -52,7 +54,7 @@ class Record implements IRecord, \JsonSerializable {
 	 *
 	 * @return array
 	 */
-	public function jsonSerialize() {
+	public function jsonSerialize(): mixed {
 		return (array)$this->dataSet;
 	}
 
