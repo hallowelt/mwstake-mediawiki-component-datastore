@@ -13,7 +13,7 @@ class FilterFactory {
 			'date' => 'MWStake\MediaWiki\Component\DataStore\Filter\Date',
 			# 'datetime'=> 'MWStake\MediaWiki\Component\DataStore\Filter\DateTime',
 			'boolean' => 'MWStake\MediaWiki\Component\DataStore\Filter\Boolean',
-			'numeric' => 'MWStake\MediaWiki\Component\DataStore\Filter\Numeric',
+			'numeric' => 'MWStake\MediaWiki\Component\DataStore\Filter\NumericValue',
 			'title' => 'MWStake\MediaWiki\Component\DataStore\Filter\Title',
 			'templatetitle' => 'MWStake\MediaWiki\Component\DataStore\Filter\TemplateTitle',
 			'list' => 'MWStake\MediaWiki\Component\DataStore\Filter\ListValue'
