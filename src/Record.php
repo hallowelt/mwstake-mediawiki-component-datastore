@@ -55,7 +55,7 @@ class Record implements IRecord, JsonSerializable {
 	 *
 	 * @return array
 	 */
-	public function jsonSerialize(): mixed {
+	public function jsonSerialize(): array {
 		return (array)$this->dataSet;
 	}
 
