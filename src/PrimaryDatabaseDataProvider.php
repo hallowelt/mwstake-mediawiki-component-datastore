@@ -146,10 +146,10 @@ abstract class PrimaryDatabaseDataProvider implements IPrimaryDataProvider {
 				);
 				break;
 			case NumericValue::COMPARISON_GREATER_THAN:
-				$conds[] = "{$filter->getValue()} > {$filter->getField()}";
+				$conds[] = "{$filter->getField()} > {$filter->getValue()}";
 				break;
 			case NumericValue::COMPARISON_LOWER_THAN:
-				$conds[] = "{$filter->getValue()} < {$filter->getField()}";
+				$conds[] = "{$filter->getField()} < {$filter->getValue()}";
 				break;
 			default:
 				$apply = false;
