@@ -6,6 +6,7 @@ class Schema extends \ArrayObject {
 	public const FILTERABLE = 'filterable';
 	public const SORTABLE = 'sortable';
 	public const TYPE = 'type';
+	public const IS_BUCKET = 'is_bucket';
 
 	/**
 	 *
@@ -59,6 +60,13 @@ class Schema extends \ArrayObject {
 	 */
 	public function getFilterableFields() {
 		return $this->filterFields( self::FILTERABLE, true );
+	}
+
+	/**
+	 * @return string[]
+	 */
+	public function getBucketFields() {
+		return $this->filterFields( self::IS_BUCKET, true );
 	}
 
 }

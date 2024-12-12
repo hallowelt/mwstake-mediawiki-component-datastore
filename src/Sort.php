@@ -2,6 +2,8 @@
 
 namespace MWStake\MediaWiki\Component\DataStore;
 
+use UnexpectedValueException;
+
 class Sort {
 
 	public const KEY_PROPERTY = 'property';

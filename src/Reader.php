@@ -78,8 +78,10 @@ abstract class Reader implements IReader {
 			$dataSets = $secondaryDataProvider->extend( $dataSets );
 		}
 
-		$resultSet = new ResultSet( $dataSets, $total );
-		return $resultSet;
+		if ( $primaryDataProvider instanceof IBucketProvider ) {
+			return new BucketedResultSet( $dataSets, $total, $primaryDataProvider->getBuckets() );
+		}
+		return new ResultSet( $dataSets, $total );
 	}
 
 	/**
