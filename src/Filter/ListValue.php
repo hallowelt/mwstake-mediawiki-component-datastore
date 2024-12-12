@@ -31,6 +31,10 @@ class ListValue extends Filter {
 			return true;
 		}
 		$fieldValues = $dataSet->get( $this->getField() );
+		// empty( false ) = true
+		if ( is_bool( $fieldValues ) ) {
+			$fieldValues = [ $fieldValues ? 'true' : 'false' ];
+		}
 		if ( empty( $fieldValues ) ) {
 			return false;
 		}
