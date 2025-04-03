@@ -4,7 +4,6 @@ namespace MWStake\MediaWiki\Component\DataStore;
 
 class BucketedResultSet extends ResultSet {
 
-
 	/**
 	 *
 	 * @param \MWStake\MediaWiki\Component\DataStore\Record[] $records

@@ -2,11 +2,17 @@
 
 namespace MWStake\MediaWiki\Component\DataStore;
 
+use Exception;
+use MediaWiki\Config\Config;
+use MediaWiki\Context\IContextSource;
+use Wikimedia\Rdbms\IDatabase;
+use Wikimedia\Rdbms\LoadBalancer;
+
 abstract class DatabaseWriter extends Writer {
 
 	/**
 	 *
-	 * @var \Wikimedia\Rdbms\IDatabase
+	 * @var IDatabase
 	 */
 	protected $db = null;
 
@@ -29,12 +35,12 @@ abstract class DatabaseWriter extends Writer {
 	/**
 	 *
 	 * @param IReader $reader
-	 * @param \Wikimedia\Rdbms\LoadBalancer $loadBalancer
-	 * @param \IContextSource|null $context
-	 * @param \Config|null $config
+	 * @param LoadBalancer $loadBalancer
+	 * @param IContextSource|null $context
+	 * @param Config|null $config
 	 */
 	public function __construct( IReader $reader, $loadBalancer,
-		\IContextSource $context = null, \Config $config = null ) {
+		?IContextSource $context = null, ?Config $config = null ) {
 		parent::__construct( $context, $config );
 		$this->reader = $reader;
 		$this->db = $loadBalancer->getConnection( DB_PRIMARY );
@@ -95,7 +101,7 @@ abstract class DatabaseWriter extends Writer {
 				$this->makeInsertFields( $record ),
 				__METHOD__
 			);
-		} catch ( \Exception $e ) {
+		} catch ( Exception $e ) {
 			$record->getStatus()->fatal( $e );
 			return;
 		}
@@ -121,7 +127,7 @@ abstract class DatabaseWriter extends Writer {
 				$this->makeUpdateConditions( $existingRecord, $record ),
 				__METHOD__
 			);
-		} catch ( \Exception $e ) {
+		} catch ( Exception $e ) {
 			$record->getStatus()->fatal( $e );
 			return;
 		}
@@ -146,7 +152,7 @@ abstract class DatabaseWriter extends Writer {
 				$this->makeDeleteConditions( $existingRecord, $record ),
 				__METHOD__
 			);
-		} catch ( \Exception $e ) {
+		} catch ( Exception $e ) {
 			$record->getStatus()->fatal( $e );
 			return;
 		}

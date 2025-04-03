@@ -6,8 +6,9 @@ use MWStake\MediaWiki\Component\DataStore\Filter;
 use MWStake\MediaWiki\Component\DataStore\Filter\StringValue;
 use MWStake\MediaWiki\Component\DataStore\ReaderParams;
 use MWStake\MediaWiki\Component\DataStore\Sort;
+use PHPUnit\Framework\TestCase;
 
-class ReaderParamsTest extends \PHPUnit\Framework\TestCase {
+class ReaderParamsTest extends TestCase {
 	/**
 	 * @covers \MWStake\MediaWiki\Component\DataStore\ReaderParams::__construct
 	 */
@@ -43,7 +44,7 @@ class ReaderParamsTest extends \PHPUnit\Framework\TestCase {
 		$this->assertEquals( 50, $params->getLimit() );
 
 		$sort = $params->getSort();
-		$this->assertEquals( 2, count( $sort ) );
+		$this->assertCount( 2, $sort );
 		$firstSort = $sort[0];
 		$this->assertInstanceOf(
 			Sort::class, $firstSort
@@ -55,7 +56,7 @@ class ReaderParamsTest extends \PHPUnit\Framework\TestCase {
 		);
 
 		$filter = $params->getFilter();
-		$this->assertEquals( 2, count( $filter ) );
+		$this->assertCount( 2, $filter );
 
 		$firstFilter = $filter[0];
 		$this->assertInstanceOf(
@@ -72,6 +73,6 @@ class ReaderParamsTest extends \PHPUnit\Framework\TestCase {
 			$filedNames[] = $filterObject->getField();
 		}
 
-		$this->assertTrue( in_array( 'prop_a', $filedNames ) );
+		$this->assertContains( 'prop_a', $filedNames );
 	}
 }

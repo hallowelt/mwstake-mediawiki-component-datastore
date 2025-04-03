@@ -2,31 +2,36 @@
 
 namespace MWStake\MediaWiki\Component\DataStore;
 
+use MediaWiki\Config\Config;
+use MediaWiki\Context\IContextSource;
+use MediaWiki\Context\RequestContext;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Title\Title;
+use MediaWiki\User\User;
 
 abstract class Writer implements IWriter {
 
 	/**
 	 *
-	 * @var \IContextSource
+	 * @var IContextSource
 	 */
 	protected $context = null;
 
 	/**
 	 *
-	 * @var \Config
+	 * @var Config
 	 */
 	protected $config = null;
 
 	/**
 	 *
-	 * @param \IContextSource|null $context
-	 * @param \Config|null $config
+	 * @param IContextSource|null $context
+	 * @param Config|null $config
 	 */
-	public function __construct( \IContextSource $context = null, \Config $config = null ) {
+	public function __construct( ?IContextSource $context = null, ?Config $config = null ) {
 		$this->context = $context;
 		if ( $this->context === null ) {
-			$this->context = \RequestContext::getMain();
+			$this->context = RequestContext::getMain();
 		}
 
 		$this->config = $config;
@@ -37,7 +42,7 @@ abstract class Writer implements IWriter {
 
 	/**
 	 *
-	 * @return \User
+	 * @return User
 	 */
 	protected function getUser() {
 		return $this->context->getUser();
@@ -45,7 +50,7 @@ abstract class Writer implements IWriter {
 
 	/**
 	 *
-	 * @return \Title
+	 * @return Title
 	 */
 	protected function getTitle() {
 		return $this->context->getTitle();

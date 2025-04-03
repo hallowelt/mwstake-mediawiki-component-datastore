@@ -2,13 +2,13 @@
 
 namespace MWStake\MediaWiki\Component\DataStore;
 
-use FormatJson;
+use MediaWiki\Json\FormatJson;
 
 class Sorter {
 
 	/**
 	 *
-	 * @var Sort[];
+	 * @var Sort[]
 	 */
 	protected $sorts = null;
 
@@ -112,7 +112,7 @@ class Sorter {
 	 */
 	protected function canBeCastedToString( $value ) {
 		if ( !is_array( $value ) &&
-			( !is_object( $value ) && settype( $value, 'string' ) !== false ) ||
+			( !is_object( $value ) && settype( $value, 'string' ) !== false ) || // phpcs:ignore Generic.CodeAnalysis.RequireExplicitBooleanOperatorPrecedence.MissingParentheses, Generic.Files.LineLength.TooLong
 			( is_object( $value ) && method_exists( $value, '__toString' ) ) ) {
 			return true;
 		} else {

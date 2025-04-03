@@ -4,6 +4,7 @@ namespace MWStake\MediaWiki\Component\DataStore;
 
 use MWStake\MediaWiki\Component\DataStore\Filter\NumericValue;
 use MWStake\MediaWiki\Component\DataStore\Filter\StringValue;
+use stdClass;
 use Wikimedia\Rdbms\IDatabase;
 
 abstract class PrimaryDatabaseDataProvider implements IPrimaryDataProvider {
@@ -210,7 +211,7 @@ abstract class PrimaryDatabaseDataProvider implements IPrimaryDataProvider {
 
 	/**
 	 *
-	 * @param \stdClass $row
+	 * @param stdClass $row
 	 */
-	abstract protected function appendRowToData( \stdClass $row );
+	abstract protected function appendRowToData( stdClass $row );
 }

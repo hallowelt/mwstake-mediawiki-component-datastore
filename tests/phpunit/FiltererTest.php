@@ -5,8 +5,11 @@ namespace MWStake\MediaWiki\Component\DataStore\Tests;
 use MWStake\MediaWiki\Component\DataStore\Filter;
 use MWStake\MediaWiki\Component\DataStore\Filterer;
 use MWStake\MediaWiki\Component\DataStore\Record;
+use PHPUnit\Framework\TestCase;
 
-class FiltererTest extends \PHPUnit\Framework\TestCase {
+class FiltererTest extends TestCase {
+
+	/** @var array */
 	protected $testDataSets = [
 		[
 			'field1' => 1,
@@ -66,7 +69,7 @@ class FiltererTest extends \PHPUnit\Framework\TestCase {
 		$dataSets = $this->makeDataSets();
 		$filteredDataSets = $filterer->filter( $dataSets );
 
-		$this->assertEquals( $expectedCount, count( $filteredDataSets ) );
+		$this->assertCount( $expectedCount, $filteredDataSets );
 	}
 
 	public function provideFilterData() {
