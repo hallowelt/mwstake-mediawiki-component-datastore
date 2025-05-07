@@ -4,8 +4,9 @@ namespace MWStake\MediaWiki\Component\DataStore\Tests\Filter;
 
 use MWStake\MediaWiki\Component\DataStore\Filter;
 use MWStake\MediaWiki\Component\DataStore\Record;
+use PHPUnit\Framework\TestCase;
 
-class TitleTest extends \PHPUnit\Framework\TestCase {
+class TitleTest extends TestCase {
 	/**
 	 * @covers \MWStake\MediaWiki\Component\DataStore\Filter\Title::matches
 	 */

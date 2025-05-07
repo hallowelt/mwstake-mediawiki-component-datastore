@@ -2,6 +2,8 @@
 
 namespace MWStake\MediaWiki\Component\DataStore\Filter;
 
+use MediaWiki\Title\Title as MediaWikiTitle;
+
 class Title extends Range {
 
 	/**
@@ -16,24 +18,24 @@ class Title extends Range {
 			// TODO: Warning
 			return true;
 		}
-		$fieldValue = \Title::newFromText(
+		$fieldValue = MediaWikiTitle::newFromText(
 			$dataSet->get( $this->getField() ),
 			$this->getDefaultTitleNamespace()
 		);
-		$filterValue = \Title::newFromText(
+		$filterValue = MediaWikiTitle::newFromText(
 			$this->getValue(),
 			$this->getDefaultTitleNamespace()
 		);
 
 		switch ( $this->getComparison() ) {
 			case self::COMPARISON_GREATER_THAN:
-				return \Title::compare( $fieldValue, $filterValue ) > 0;
+				return MediaWikiTitle::compare( $fieldValue, $filterValue ) > 0;
 			case self::COMPARISON_LOWER_THAN:
-				return \Title::compare( $fieldValue, $filterValue ) < 0;
+				return MediaWikiTitle::compare( $fieldValue, $filterValue ) < 0;
 			case self::COMPARISON_EQUALS:
-				return \Title::compare( $fieldValue, $filterValue ) == 0;
+				return MediaWikiTitle::compare( $fieldValue, $filterValue ) == 0;
 			case self::COMPARISON_NOT_EQUALS:
-				return \Title::compare( $fieldValue, $filterValue ) != 0;
+				return MediaWikiTitle::compare( $fieldValue, $filterValue ) != 0;
 		}
 		return true;
 	}

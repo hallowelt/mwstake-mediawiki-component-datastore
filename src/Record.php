@@ -3,13 +3,14 @@
 namespace MWStake\MediaWiki\Component\DataStore;
 
 use JsonSerializable;
-use Status;
+use MediaWiki\Status\Status;
+use stdClass;
 
 class Record implements IRecord, JsonSerializable {
 
 	/**
 	 *
-	 * @var \stdClass
+	 * @var stdClass
 	 */
 	protected $dataSet = null;
 
@@ -21,10 +22,10 @@ class Record implements IRecord, JsonSerializable {
 
 	/**
 	 *
-	 * @param \stdClass $dataSet
+	 * @param stdClass $dataSet
 	 * @param Status|null $status
 	 */
-	public function __construct( \stdClass $dataSet, Status $status = null ) {
+	public function __construct( stdClass $dataSet, ?Status $status = null ) {
 		$this->dataSet = $dataSet;
 		$this->status = $status;
 	}
@@ -61,7 +62,7 @@ class Record implements IRecord, JsonSerializable {
 
 	/**
 	 *
-	 * @return \stdClass
+	 * @return stdClass
 	 */
 	public function getData() {
 		return $this->dataSet;

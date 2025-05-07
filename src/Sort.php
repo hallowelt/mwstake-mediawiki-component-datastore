@@ -12,8 +12,10 @@ class Sort {
 	public const ASCENDING = 'ASC';
 	public const DESCENDING = 'DESC';
 
+	/** @var string */
 	protected $property = '';
 
+	/** @var string */
 	protected $direction = '';
 
 	/**

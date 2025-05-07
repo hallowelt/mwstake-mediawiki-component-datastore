@@ -2,6 +2,8 @@
 
 namespace MWStake\MediaWiki\Component\DataStore;
 
+use stdClass;
+
 class Filterer {
 
 	/**
@@ -34,7 +36,7 @@ class Filterer {
 
 	/**
 	 *
-	 * @param \stdClass $dataSet
+	 * @param stdClass $dataSet
 	 * @return bool
 	 */
 	protected function matchFilter( $dataSet ) {

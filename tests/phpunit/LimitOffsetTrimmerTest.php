@@ -3,9 +3,11 @@
 namespace MWStake\MediaWiki\Component\DataStore\Tests;
 
 use MWStake\MediaWiki\Component\DataStore\LimitOffsetTrimmer;
+use PHPUnit\Framework\TestCase;
 
-class LimitOffsetTrimmerTest extends \PHPUnit\Framework\TestCase {
+class LimitOffsetTrimmerTest extends TestCase {
 
+	/** @var array */
 	protected $testDataSets = [
 		// Page 1
 		'Zero',
@@ -35,8 +37,8 @@ class LimitOffsetTrimmerTest extends \PHPUnit\Framework\TestCase {
 		$trimmer = new LimitOffsetTrimmer( 5, 5 );
 		$trimmedData = $trimmer->trim( $this->testDataSets );
 
-		$this->assertEquals( count( $trimmedData ), 5 );
-		$this->assertEquals( $trimmedData[0], 'Five' );
+		$this->assertCount( 5, $trimmedData );
+		$this->assertEquals( 'Five', $trimmedData[0] );
 	}
 
 	/**
@@ -46,7 +48,7 @@ class LimitOffsetTrimmerTest extends \PHPUnit\Framework\TestCase {
 		$trimmer = new LimitOffsetTrimmer( 5, 10 );
 		$trimmedData = $trimmer->trim( $this->testDataSets );
 
-		$this->assertEquals( count( $trimmedData ), 4 );
-		$this->assertEquals( $trimmedData[0], 'Ten' );
+		$this->assertCount( 4, $trimmedData );
+		$this->assertEquals( 'Ten', $trimmedData[0] );
 	}
 }

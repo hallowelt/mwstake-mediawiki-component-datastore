@@ -2,6 +2,8 @@
 
 namespace MWStake\MediaWiki\Component\DataStore;
 
+use UnexpectedValueException;
+
 class FilterFactory {
 	/**
 	 *
@@ -24,14 +26,14 @@ class FilterFactory {
 	 *
 	 * @param array $filter
 	 * @return \MWStake\MediaWiki\Component\DataStore\Filter
-	 * @throws \UnexpectedValueException
+	 * @throws UnexpectedValueException
 	 */
 	public static function newFromArray( $filter ) {
 		$typeMap = static::getTypeMap();
 		if ( isset( $typeMap[$filter[Filter::KEY_TYPE]] ) ) {
 			return new $typeMap[$filter[Filter::KEY_TYPE]]( $filter );
 		} else {
-			throw new \UnexpectedValueException(
+			throw new UnexpectedValueException(
 				"No filter class for '{$filter[Filter::KEY_TYPE]}' available!"
 			);
 		}

@@ -2,7 +2,9 @@
 
 namespace MWStake\MediaWiki\Component\DataStore;
 
-class Schema extends \ArrayObject {
+use ArrayObject;
+
+class Schema extends ArrayObject {
 	public const FILTERABLE = 'filterable';
 	public const SORTABLE = 'sortable';
 	public const TYPE = 'type';
@@ -26,10 +28,10 @@ class Schema extends \ArrayObject {
 	 * @return array
 	 */
 	protected function filterEntries( $key, $value ) {
-		$callback = function ( $entry ) use( $key, $value ) {
+		$callback = static function ( $entry ) use( $key, $value ) {
 			return array_key_exists( $key, $entry )
 				? $entry[$key] === $value
-				: false === $value;
+				: $value === false;
 		};
 		return array_filter( (array)$this, $callback );
 	}

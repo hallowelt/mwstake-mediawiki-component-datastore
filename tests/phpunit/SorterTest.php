@@ -5,8 +5,11 @@ namespace MWStake\MediaWiki\Component\DataStore\Tests;
 use MWStake\MediaWiki\Component\DataStore\Record;
 use MWStake\MediaWiki\Component\DataStore\Sort;
 use MWStake\MediaWiki\Component\DataStore\Sorter;
+use PHPUnit\Framework\TestCase;
 
-class SorterTest extends \PHPUnit\Framework\TestCase {
+class SorterTest extends TestCase {
+
+	/** @var array */
 	protected $testDataSets = [
 		[
 			'field1' => 1,

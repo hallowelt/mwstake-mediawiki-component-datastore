@@ -54,7 +54,7 @@ class StringValue extends Filter {
 		switch ( $operation ) {
 			case self::COMPARISON_STARTS_WITH:
 				return $needle === '' ||
-					strrpos( $haystack, $needle, - strlen( $haystack ) ) !== false;
+					strrpos( $haystack, $needle, -strlen( $haystack ) ) !== false;
 			case self::COMPARISON_ENDS_WITH:
 				$needleLen = strlen( $needle );
 				if ( $needleLen < 1 ) {

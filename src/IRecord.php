@@ -2,7 +2,8 @@
 
 namespace MWStake\MediaWiki\Component\DataStore;
 
-use Status;
+use MediaWiki\Status\Status;
+use stdClass;
 
 interface IRecord {
 
@@ -21,7 +22,7 @@ interface IRecord {
 	public function set( $fieldName, $value );
 
 	/**
-	 * @return \stdClass
+	 * @return stdClass
 	 */
 	public function getData();
 

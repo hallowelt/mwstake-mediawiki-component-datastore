@@ -4,8 +4,9 @@ namespace MWStake\MediaWiki\Component\DataStore\Tests\Filter;
 
 use MWStake\MediaWiki\Component\DataStore\Filter;
 use MWStake\MediaWiki\Component\DataStore\Record;
+use PHPUnit\Framework\TestCase;
 
-class DateTest extends \PHPUnit\Framework\TestCase {
+class DateTest extends TestCase {
 	/**
 	 * @covers \MWStake\MediaWiki\Component\DataStore\Filter\Date::matches
 	 */
