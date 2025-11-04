@@ -1,13 +1,13 @@
 <?php
 
-namespace MWStake\MediaWiki\Component\DataStore\Tests;
+namespace MWStake\MediaWiki\Component\DataStore\Tests\Unit;
 
+use MediaWikiUnitTestCase;
 use MWStake\MediaWiki\Component\DataStore\Filter;
 use MWStake\MediaWiki\Component\DataStore\Filterer;
 use MWStake\MediaWiki\Component\DataStore\Record;
-use PHPUnit\Framework\TestCase;
 
-class FiltererTest extends TestCase {
+class FiltererTest extends MediaWikiUnitTestCase {
 
 	/** @var array */
 	protected $testDataSets = [
