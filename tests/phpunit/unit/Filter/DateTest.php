@@ -1,12 +1,12 @@
 <?php
 
-namespace MWStake\MediaWiki\Component\DataStore\Tests\Filter;
+namespace MWStake\MediaWiki\Component\DataStore\Tests\Unit\Filter;
 
+use MediaWikiUnitTestCase;
 use MWStake\MediaWiki\Component\DataStore\Filter;
 use MWStake\MediaWiki\Component\DataStore\Record;
-use PHPUnit\Framework\TestCase;
 
-class DateTest extends TestCase {
+class DateTest extends MediaWikiUnitTestCase {
 	/**
 	 * @covers \MWStake\MediaWiki\Component\DataStore\Filter\Date::matches
 	 */

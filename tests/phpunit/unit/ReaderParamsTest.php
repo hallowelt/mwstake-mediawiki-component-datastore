@@ -1,14 +1,14 @@
 <?php
 
-namespace MWStake\MediaWiki\Component\DataStore\Tests;
+namespace MWStake\MediaWiki\Component\DataStore\Tests\Unit;
 
+use MediaWikiUnitTestCase;
 use MWStake\MediaWiki\Component\DataStore\Filter;
 use MWStake\MediaWiki\Component\DataStore\Filter\StringValue;
 use MWStake\MediaWiki\Component\DataStore\ReaderParams;
 use MWStake\MediaWiki\Component\DataStore\Sort;
-use PHPUnit\Framework\TestCase;
 
-class ReaderParamsTest extends TestCase {
+class ReaderParamsTest extends MediaWikiUnitTestCase {
 	/**
 	 * @covers \MWStake\MediaWiki\Component\DataStore\ReaderParams::__construct
 	 */

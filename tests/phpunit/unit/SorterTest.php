@@ -1,13 +1,13 @@
 <?php
 
-namespace MWStake\MediaWiki\Component\DataStore\Tests;
+namespace MWStake\MediaWiki\Component\DataStore\Tests\Unit;
 
+use MediaWikiUnitTestCase;
 use MWStake\MediaWiki\Component\DataStore\Record;
 use MWStake\MediaWiki\Component\DataStore\Sort;
 use MWStake\MediaWiki\Component\DataStore\Sorter;
-use PHPUnit\Framework\TestCase;
 
-class SorterTest extends TestCase {
+class SorterTest extends MediaWikiUnitTestCase {
 
 	/** @var array */
 	protected $testDataSets = [

@@ -1,11 +1,11 @@
 <?php
 
-namespace MWStake\MediaWiki\Component\DataStore\Tests;
+namespace MWStake\MediaWiki\Component\DataStore\Tests\Unit;
 
+use MediaWikiUnitTestCase;
 use MWStake\MediaWiki\Component\DataStore\LimitOffsetTrimmer;
-use PHPUnit\Framework\TestCase;
 
-class LimitOffsetTrimmerTest extends TestCase {
+class LimitOffsetTrimmerTest extends MediaWikiUnitTestCase {
 
 	/** @var array */
 	protected $testDataSets = [

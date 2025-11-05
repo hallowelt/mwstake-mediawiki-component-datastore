@@ -1,12 +1,12 @@
 <?php
 
-namespace MWStake\MediaWiki\Component\DataStore\Tests\Filter;
+namespace MWStake\MediaWiki\Component\DataStore\Tests\Integration\Filter;
 
+use MediaWikiIntegrationTestCase;
 use MWStake\MediaWiki\Component\DataStore\Filter;
 use MWStake\MediaWiki\Component\DataStore\Record;
-use PHPUnit\Framework\TestCase;
 
-class TemplateTitleTest extends TestCase {
+class TemplateTitleTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * @covers \MWStake\MediaWiki\Component\DataStore\Filter\TemplateTitle::matches
 	 */

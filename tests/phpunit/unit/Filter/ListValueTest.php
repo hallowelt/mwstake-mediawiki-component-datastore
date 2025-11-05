@@ -1,12 +1,12 @@
 <?php
 
-namespace MWStake\MediaWiki\Component\DataStore\Tests\Filter;
+namespace MWStake\MediaWiki\Component\DataStore\Tests\Unit\Filter;
 
+use MediaWikiUnitTestCase;
 use MWStake\MediaWiki\Component\DataStore\Filter;
 use MWStake\MediaWiki\Component\DataStore\Record;
-use PHPUnit\Framework\TestCase;
 
-class ListValueTest extends TestCase {
+class ListValueTest extends MediaWikiUnitTestCase {
 	/**
 	 * @covers \MWStake\MediaWiki\Component\DataStore\Filter\ListValue::matches
 	 */
