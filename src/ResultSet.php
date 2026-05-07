@@ -17,11 +17,14 @@ class ResultSet extends RecordSet {
 
 	/**
 	 *
-	 * @param \MWStake\MediaWiki\Component\DataStore\Record[] $records
+	 * @param Record[] $records
 	 * @param int $total
+	 * @param array|null $continueValue
+	 * @param bool $totalApproximate
+	 * @param string|null $queryId
 	 */
 	public function __construct(
-		$records, $total, ?array $continueValue = null, bool $totalApproximate = false, string $queryId = null
+		$records, $total, ?array $continueValue = null, bool $totalApproximate = false, ?string $queryId = null
 	) {
 		parent::__construct( $records );
 		$this->total = $total;

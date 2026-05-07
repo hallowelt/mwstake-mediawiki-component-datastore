@@ -21,7 +21,6 @@ interface IContinueAwareRecord extends IRecord {
 	 */
 	public function getContinueValue(): array;
 
-
 	/**
 	 * Check if the record matches the continue value, i.e. if it last shown record in previous set
 	 *

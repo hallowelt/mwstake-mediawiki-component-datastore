@@ -19,7 +19,7 @@ abstract class TitleAwareReader extends Reader {
 	 * @param string|null $queryId
 	 * @return ResultSet
 	 */
-	protected function getResultSet( array $dataSets, int $total, ITrimmer $trimmer, string $queryId = null ) {
+	protected function getResultSet( array $dataSets, int $total, ITrimmer $trimmer, ?string $queryId = null ) {
 		if ( !( $trimmer instanceof PermissionTrimmer ) ) {
 			return parent::getResultSet( $dataSets, $total, $trimmer, $queryId );
 		}

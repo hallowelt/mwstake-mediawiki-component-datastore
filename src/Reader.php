@@ -40,6 +40,7 @@ abstract class Reader implements IReader {
 	 *
 	 * @param IContextSource|null $context
 	 * @param Config|null $config
+	 * @param \ObjectCacheFactory|null $cacheFactory
 	 */
 	public function __construct(
 		?IContextSource $context = null, ?Config $config = null,
@@ -85,12 +86,20 @@ abstract class Reader implements IReader {
 	public function read( $params ) {
 		$queryId = $this->getQueryId( $params );
 		$dataSets = null;
+		$buckets = null;
 		if ( $queryId && !$params->getDisableCache() ) {
 			$dataSets = $this->tryGetFromCache( $queryId );
+			$buckets = $this->tryGetBucketsFromCache( $queryId );
 		}
 		if ( !$dataSets ) {
 			$primaryDataProvider = $this->makePrimaryDataProvider( $params );
 			$dataSets = $primaryDataProvider->makeData( $params );
+			if ( $primaryDataProvider instanceof IBucketProvider ) {
+				$buckets = $primaryDataProvider->getBuckets();
+				if ( $buckets && $queryId ) {
+					$this->cacheBuckets( $queryId, $buckets );
+				}
+			}
 			$this->cacheResults( $queryId, $dataSets );
 		}
 		$this->preProcessRawData( $dataSets, $params );
@@ -114,16 +123,16 @@ abstract class Reader implements IReader {
 		}
 
 		$resultSet = $this->getResultSet( $dataSets, $total, $trimmer, $queryId );
-
-		if ( $primaryDataProvider instanceof IBucketProvider ) {
-			$resultSet->setBuckets( $primaryDataProvider->getBuckets() );
+		if ( $buckets ) {
+			$resultSet->setBuckets( $buckets );
 		}
+
 		return $resultSet;
 	}
 
 	/**
-	 * @param array $dataSets
-	 * @param $params
+	 * @param array &$dataSets
+	 * @param ReaderParams $params
 	 * @return void
 	 */
 	protected function preProcessRawData( array &$dataSets, $params ): void {
@@ -214,6 +223,31 @@ abstract class Reader implements IReader {
 	 */
 	private function getQueryId( ReaderParams $params ): string {
 		return md5( get_class( $this ) . $params->getHash() );
+	}
+
+	/**
+	 * @param string $queryId
+	 * @param array $buckets
+	 * @return void
+	 */
+	private function cacheBuckets( string $queryId, array $buckets ) {
+		$cache = $this->cacheFactory->getLocalServerInstance();
+		$key = $cache->makeKey( 'datastore', 'reader', 'buckets', $queryId );
+		$cache->set( $key, $buckets, static::CACHE_TTL );
+	}
+
+	/**
+	 * @param string $queryId
+	 * @return array|null
+	 */
+	private function tryGetBucketsFromCache( string $queryId ) {
+		$cache = $this->cacheFactory->getLocalServerInstance();
+		$key = $cache->makeKey( 'datastore', 'reader', 'buckets', $queryId );
+		$data = $cache->get( $key );
+		if ( !is_array( $data ) ) {
+			return null;
+		}
+		return $data;
 	}
 
 }

@@ -62,7 +62,7 @@ class LimitContinueTrimmer implements ITrimmer {
 	protected function getRelevantSet( array $dataSets ): array {
 		if ( $this->continueFrom ) {
 			$dataSets = $this->stripUntilContinue( $dataSets, $this->continueFrom );
-		} elseif( $this->offset > 0 ) {
+		} elseif ( $this->offset > 0 ) {
 			$dataSets = array_slice( $dataSets, $this->offset );
 		}
 		return $dataSets;

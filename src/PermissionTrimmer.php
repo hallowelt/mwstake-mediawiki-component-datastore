@@ -16,7 +16,6 @@ class PermissionTrimmer extends LimitContinueTrimmer {
 	 */
 	private int $total = 0;
 
-
 	/**
 	 *
 	 * @param TitleFactory $titleFactory
@@ -51,7 +50,9 @@ class PermissionTrimmer extends LimitContinueTrimmer {
 		$setFull = false;
 		foreach ( $set as  $record ) {
 			if ( !( $record instanceof IContinueAwareRecord ) ) {
-				throw new InvalidArgumentException( 'PermissionTrimmer can be used only with records implementing ITitleAwareRecord' );
+				throw new InvalidArgumentException(
+					'PermissionTrimmer can be used only with records implementing ITitleAwareRecord'
+				);
 			}
 			$title = $record->getTitle( $this->titleFactory );
 			if ( !$title ) {
