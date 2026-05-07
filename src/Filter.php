@@ -171,7 +171,10 @@ abstract class Filter implements \JsonSerializable {
 	 */
 	abstract protected function doesMatch( $dataSet );
 
-	public function jsonSerialize() {
+	/**
+	 * @return mixed
+	 */
+	public function jsonSerialize(): mixed {
 		return [
 			static::KEY_FIELD => $this->getField(),
 			static::KEY_VALUE => $this->getValue(),

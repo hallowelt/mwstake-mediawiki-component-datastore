@@ -82,7 +82,7 @@ class Sort implements \JsonSerializable {
 	/**
 	 * @return array
 	 */
-	public function jsonSerialize() {
+	public function jsonSerialize(): mixed {
 		return [
 			static::KEY_PROPERTY => $this->getProperty(),
 			static::KEY_DIRECTION => $this->getDirection()
