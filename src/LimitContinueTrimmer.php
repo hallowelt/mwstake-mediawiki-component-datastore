@@ -31,6 +31,9 @@ class LimitContinueTrimmer implements ITrimmer {
 	 */
 	public function trim( $dataSets ) {
 		$set = $this->getRelevantSet( $dataSets );
+		if ( $this->getLimit() === -1 ) {
+			return $set;
+		}
 		$result = array_slice( $set, 0, $this->getLimit() );
 		if ( !empty( $result ) ) {
 			if ( $result[0] instanceof IContinueAwareRecord ) {
