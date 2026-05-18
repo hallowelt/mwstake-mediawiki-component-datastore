@@ -197,6 +197,10 @@ abstract class Reader implements IReader {
 	 * @return array|null
 	 */
 	protected function tryGetFromCache( string $queryId ): ?array {
+		// Due to issues with the cache invalidation, we disable this code
+		// But we keep it for improvement in the next release
+		return null;
+
 		$cache = $this->cacheFactory->getLocalServerInstance();
 		$key = $cache->makeKey( 'datastore', 'reader', 'query', $queryId );
 		$data = $cache->get( $key );
@@ -241,6 +245,10 @@ abstract class Reader implements IReader {
 	 * @return array|null
 	 */
 	private function tryGetBucketsFromCache( string $queryId ) {
+		// Due to issues with the cache invalidation, we disable this code
+		// But we keep it for improvement in the next release
+		return null;
+
 		$cache = $this->cacheFactory->getLocalServerInstance();
 		$key = $cache->makeKey( 'datastore', 'reader', 'buckets', $queryId );
 		$data = $cache->get( $key );
