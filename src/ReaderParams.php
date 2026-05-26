@@ -12,6 +12,7 @@ class ReaderParams {
 	public const PARAM_FILTER = 'filter';
 	public const PARAM_CONTINUE_FROM = 'continue';
 	public const PARAM_NO_CACHE = 'no-cache';
+	public const PARAM_QUERY_ID = 'query-id';
 
 	/**
 	 * For pre filtering
@@ -54,6 +55,11 @@ class ReaderParams {
 	protected $noCache = false;
 
 	/**
+	 * @var string|null
+	 */
+	protected $queryId = null;
+
+	/**
 	 *
 	 * @param array $params
 	 */
@@ -63,6 +69,7 @@ class ReaderParams {
 		$this->setIfAvailable( $this->start, $params, static::PARAM_START );
 		$this->setIfAvailable( $this->limit, $params, static::PARAM_LIMIT );
 		$this->setIfAvailable( $this->continueFrom, $params, static::PARAM_CONTINUE_FROM );
+		$this->setIfAvailable( $this->queryId, $params, static::PARAM_QUERY_ID );
 		$this->setSort( $params );
 		$this->setFilter( $params );
 	}
@@ -146,6 +153,13 @@ class ReaderParams {
 	 */
 	public function getDisableCache(): bool {
 		return $this->noCache;
+	}
+
+	/**
+	 * @return string|null
+	 */
+	public function getQueryId(): ?string {
+		return $this->queryId;
 	}
 
 	/**
