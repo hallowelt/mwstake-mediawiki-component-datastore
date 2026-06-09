@@ -201,13 +201,13 @@ abstract class Reader implements IReader {
 		// But we keep it for improvement in the next release
 		return null;
 
-		$cache = $this->cacheFactory->getLocalServerInstance();
+/* 		$cache = $this->cacheFactory->getLocalServerInstance();
 		$key = $cache->makeKey( 'datastore', 'reader', 'query', $queryId );
 		$data = $cache->get( $key );
 		if ( !is_array( $data ) ) {
 			return null;
 		}
-		return $data;
+		return $data; */
 	}
 
 	/**
@@ -249,13 +249,13 @@ abstract class Reader implements IReader {
 		// But we keep it for improvement in the next release
 		return null;
 
-		$cache = $this->cacheFactory->getLocalServerInstance();
+/* 		$cache = $this->cacheFactory->getLocalServerInstance();
 		$key = $cache->makeKey( 'datastore', 'reader', 'buckets', $queryId );
 		$data = $cache->get( $key );
 		if ( !is_array( $data ) ) {
 			return null;
 		}
-		return $data;
+		return $data; */
 	}
 
 }
