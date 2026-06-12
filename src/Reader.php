@@ -104,10 +104,10 @@ abstract class Reader implements IReader {
 			if ( $primaryDataProvider instanceof IBucketProvider ) {
 				$buckets = $primaryDataProvider->getBuckets();
 				if ( $buckets && $queryId ) {
-					$this->cacheBuckets( $queryId, $paramsHash, $buckets );
+					$this->cacheBuckets( $queryId, $buckets, $paramsHash );
 				}
 			}
-			$this->cacheResults( $queryId, $paramsHash, $dataSets );
+			$this->cacheResults( $queryId, $dataSets, $paramsHash );
 		}
 		$this->preProcessRawData( $dataSets, $params );
 
@@ -204,7 +204,7 @@ abstract class Reader implements IReader {
 	 * @param string $paramsHash
 	 * @return array|null
 	 */
-	protected function tryGetFromCache( string $queryId, string $paramsHash ): ?array {
+	protected function tryGetFromCache( string $queryId, string $paramsHash = '' ): ?array {
 		$cache = $this->cacheFactory->getLocalServerInstance();
 		$key = $cache->makeKey( 'datastore', 'reader', 'query', $queryId, $paramsHash );
 		$data = $cache->get( $key );
@@ -216,11 +216,11 @@ abstract class Reader implements IReader {
 
 	/**
 	 * @param string $queryId
-	 * @param string $paramsHash
 	 * @param array $dataSets
+	 * @param string $paramsHash
 	 * @return void
 	 */
-	protected function cacheResults( string $queryId, string $paramsHash, array $dataSets ): void {
+	protected function cacheResults( string $queryId, array $dataSets, string $paramsHash = '' ): void {
 		if ( !$this->shouldCache() ) {
 			return;
 		}
@@ -239,11 +239,11 @@ abstract class Reader implements IReader {
 
 	/**
 	 * @param string $queryId
-	 * @param string $paramsHash
 	 * @param array $buckets
+	 * @param string $paramsHash
 	 * @return void
 	 */
-	protected function cacheBuckets( string $queryId, string $paramsHash, array $buckets ) {
+	protected function cacheBuckets( string $queryId, array $buckets, string $paramsHash = '' ) {
 		if ( !$this->shouldCache() ) {
 			return;
 		}
@@ -257,7 +257,7 @@ abstract class Reader implements IReader {
 	 * @param string $paramsHash
 	 * @return void
 	 */
-	private function purgeCache( string $queryId, string $paramsHash ): void {
+	private function purgeCache( string $queryId, string $paramsHash = '' ): void {
 		$cache = $this->cacheFactory->getLocalServerInstance();
 		foreach ( [ 'query', 'buckets' ] as $type ) {
 			$key = $cache->makeKey( 'datastore', 'reader', $type, $queryId, $paramsHash );
@@ -270,7 +270,7 @@ abstract class Reader implements IReader {
 	 * @param string $paramsHash
 	 * @return array|null
 	 */
-	protected function tryGetBucketsFromCache( string $queryId, string $paramsHash ) {
+	protected function tryGetBucketsFromCache( string $queryId, string $paramsHash = '' ) {
 		$cache = $this->cacheFactory->getLocalServerInstance();
 		$key = $cache->makeKey( 'datastore', 'reader', 'buckets', $queryId, $paramsHash );
 		$data = $cache->get( $key );
