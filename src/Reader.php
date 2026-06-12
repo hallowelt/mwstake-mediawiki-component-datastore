@@ -220,7 +220,7 @@ abstract class Reader implements IReader {
 	 * @param array $dataSets
 	 * @return void
 	 */
-	private function cacheResults( string $queryId, string $paramsHash, array $dataSets ): void {
+	protected function cacheResults( string $queryId, string $paramsHash, array $dataSets ): void {
 		if ( !$this->shouldCache() ) {
 			return;
 		}
@@ -233,7 +233,7 @@ abstract class Reader implements IReader {
 	 * @return string
 	 * @throws RandomException
 	 */
-	private function generateQueryId(): string {
+	protected function generateQueryId(): string {
 		return md5( get_class( $this ) . random_bytes( 32 ) );
 	}
 
@@ -243,7 +243,7 @@ abstract class Reader implements IReader {
 	 * @param array $buckets
 	 * @return void
 	 */
-	private function cacheBuckets( string $queryId, string $paramsHash, array $buckets ) {
+	protected function cacheBuckets( string $queryId, string $paramsHash, array $buckets ) {
 		if ( !$this->shouldCache() ) {
 			return;
 		}
@@ -270,7 +270,7 @@ abstract class Reader implements IReader {
 	 * @param string $paramsHash
 	 * @return array|null
 	 */
-	private function tryGetBucketsFromCache( string $queryId, string $paramsHash ) {
+	protected function tryGetBucketsFromCache( string $queryId, string $paramsHash ) {
 		$cache = $this->cacheFactory->getLocalServerInstance();
 		$key = $cache->makeKey( 'datastore', 'reader', 'buckets', $queryId, $paramsHash );
 		$data = $cache->get( $key );
