@@ -8,6 +8,7 @@ use MediaWiki\Context\RequestContext;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 use MediaWiki\User\User;
+use Random\RandomException;
 use Wikimedia\LightweightObjectStore\ExpirationAwareness;
 
 abstract class Reader implements IReader {
@@ -17,7 +18,7 @@ abstract class Reader implements IReader {
 	 * This cache is meant to last for the user's duration of the page view,
 	 * to ease pagination, not for long term caching
 	 */
-	protected const CACHE_TTL = ExpirationAwareness::TTL_MINUTE * 2;
+	protected const CACHE_TTL = ExpirationAwareness::TTL_MINUTE * 5;
 
 	/**
 	 *
@@ -82,25 +83,31 @@ abstract class Reader implements IReader {
 	 *
 	 * @param ReaderParams $params
 	 * @return ResultSet
+	 * @throws RandomException
 	 */
 	public function read( $params ) {
-		$queryId = $this->getQueryId( $params );
+		$queryId = $params->getQueryId();
+		$paramsHash = $params->getHash();
 		$dataSets = null;
 		$buckets = null;
-		if ( $queryId && !$params->getDisableCache() ) {
-			$dataSets = $this->tryGetFromCache( $queryId );
-			$buckets = $this->tryGetBucketsFromCache( $queryId );
+		if ( $queryId && $this->shouldCache() && !$params->getDisableCache() ) {
+			$dataSets = $this->tryGetFromCache( $queryId, $paramsHash );
+			$buckets = $this->tryGetBucketsFromCache( $queryId, $paramsHash );
+		} elseif ( $queryId && $params->getDisableCache() ) {
+			$this->purgeCache( $queryId, $paramsHash );
 		}
+		// If no queryId is passed, generate one
+		$queryId = $queryId ?? $this->generateQueryId();
 		if ( !$dataSets ) {
 			$primaryDataProvider = $this->makePrimaryDataProvider( $params );
 			$dataSets = $primaryDataProvider->makeData( $params );
 			if ( $primaryDataProvider instanceof IBucketProvider ) {
 				$buckets = $primaryDataProvider->getBuckets();
 				if ( $buckets && $queryId ) {
-					$this->cacheBuckets( $queryId, $buckets );
+					$this->cacheBuckets( $queryId, $buckets, $paramsHash );
 				}
 			}
-			$this->cacheResults( $queryId, $dataSets );
+			$this->cacheResults( $queryId, $dataSets, $paramsHash );
 		}
 		$this->preProcessRawData( $dataSets, $params );
 
@@ -194,68 +201,91 @@ abstract class Reader implements IReader {
 
 	/**
 	 * @param string $queryId
+	 * @param string $paramsHash
 	 * @return array|null
 	 */
-	protected function tryGetFromCache( string $queryId ): ?array {
-		// Due to issues with the cache invalidation, we disable this code
-		// But we keep it for improvement in the next release
-		return null;
-
-/* 		$cache = $this->cacheFactory->getLocalServerInstance();
-		$key = $cache->makeKey( 'datastore', 'reader', 'query', $queryId );
+	protected function tryGetFromCache( string $queryId, string $paramsHash = '' ): ?array {
+		$cache = $this->cacheFactory->getLocalServerInstance();
+		$key = $cache->makeKey( 'datastore', 'reader', 'query', $queryId, $paramsHash );
 		$data = $cache->get( $key );
 		if ( !is_array( $data ) ) {
 			return null;
 		}
-		return $data; */
+		return $data;
 	}
 
 	/**
-	 * @param string $hash
+	 * @param string $queryId
 	 * @param array $dataSets
+	 * @param string $paramsHash
 	 * @return void
 	 */
-	protected function cacheResults( string $hash, array $dataSets ): void {
+	protected function cacheResults( string $queryId, array $dataSets, string $paramsHash = '' ): void {
+		if ( !$this->shouldCache() ) {
+			return;
+		}
 		$cache = $this->cacheFactory->getLocalServerInstance();
-		$key = $cache->makeKey( 'datastore', 'reader', 'query', $hash );
+		$key = $cache->makeKey( 'datastore', 'reader', 'query', $queryId, $paramsHash );
 		$cache->set( $key, $dataSets, static::CACHE_TTL );
 	}
 
 	/**
-	 * @param ReaderParams $params
 	 * @return string
+	 * @throws RandomException
 	 */
-	protected function getQueryId( ReaderParams $params ): string {
-		return md5( get_class( $this ) . $params->getHash() );
+	protected function generateQueryId(): string {
+		return md5( get_class( $this ) . random_bytes( 32 ) );
 	}
 
 	/**
 	 * @param string $queryId
 	 * @param array $buckets
+	 * @param string $paramsHash
 	 * @return void
 	 */
-	protected function cacheBuckets( string $queryId, array $buckets ) {
+	protected function cacheBuckets( string $queryId, array $buckets, string $paramsHash = '' ) {
+		if ( !$this->shouldCache() ) {
+			return;
+		}
 		$cache = $this->cacheFactory->getLocalServerInstance();
-		$key = $cache->makeKey( 'datastore', 'reader', 'buckets', $queryId );
+		$key = $cache->makeKey( 'datastore', 'reader', 'buckets', $queryId, $paramsHash );
 		$cache->set( $key, $buckets, static::CACHE_TTL );
 	}
 
 	/**
 	 * @param string $queryId
+	 * @param string $paramsHash
+	 * @return void
+	 */
+	private function purgeCache( string $queryId, string $paramsHash = '' ): void {
+		$cache = $this->cacheFactory->getLocalServerInstance();
+		foreach ( [ 'query', 'buckets' ] as $type ) {
+			$key = $cache->makeKey( 'datastore', 'reader', $type, $queryId, $paramsHash );
+			$cache->delete( $key );
+		}
+	}
+
+	/**
+	 * @param string $queryId
+	 * @param string $paramsHash
 	 * @return array|null
 	 */
-	protected function tryGetBucketsFromCache( string $queryId ) {
-		// Due to issues with the cache invalidation, we disable this code
-		// But we keep it for improvement in the next release
-		return null;
-
-/* 		$cache = $this->cacheFactory->getLocalServerInstance();
-		$key = $cache->makeKey( 'datastore', 'reader', 'buckets', $queryId );
+	protected function tryGetBucketsFromCache( string $queryId, string $paramsHash = '' ) {
+		$cache = $this->cacheFactory->getLocalServerInstance();
+		$key = $cache->makeKey( 'datastore', 'reader', 'buckets', $queryId, $paramsHash );
 		$data = $cache->get( $key );
 		if ( !is_array( $data ) ) {
 			return null;
 		}
-		return $data; */
+		return $data;
 	}
 
+	/**
+	 * Whether the primary results of this reader can be cached
+	 *
+	 * @return bool
+	 */
+	protected function shouldCache(): bool {
+		return true;
+	}
 }
