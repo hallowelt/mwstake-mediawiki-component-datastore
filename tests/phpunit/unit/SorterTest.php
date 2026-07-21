@@ -72,7 +72,6 @@ class SorterTest extends MediaWikiUnitTestCase {
 	];
 
 	/**
-	 *
 	 * @param array $sort
 	 * @param array $expectedSorting
 	 * @dataProvider provideSortData

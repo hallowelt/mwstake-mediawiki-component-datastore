@@ -58,7 +58,6 @@ class FiltererTest extends MediaWikiUnitTestCase {
 	];
 
 	/**
-	 *
 	 * @param array $filters
 	 * @param array $expectedCount
 	 * @dataProvider provideFilterData
