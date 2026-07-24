@@ -10,25 +10,21 @@ use Wikimedia\Rdbms\IDatabase;
 abstract class PrimaryDatabaseDataProvider implements IPrimaryDataProvider {
 
 	/**
-	 *
 	 * @var Record[]
 	 */
 	protected $data = [];
 
 	/**
-	 *
 	 * @var IDatabase
 	 */
 	protected $db = null;
 
 	/**
-	 *
 	 * @var Schema
 	 */
 	protected $schema = null;
 
 	/**
-	 *
 	 * @param IDatabase $db
 	 * @param Schema $schema
 	 */
@@ -43,7 +39,6 @@ abstract class PrimaryDatabaseDataProvider implements IPrimaryDataProvider {
 	abstract protected function getTableNames();
 
 	/**
-	 *
 	 * @return string|string[]
 	 */
 	protected function getFields() {
@@ -51,7 +46,6 @@ abstract class PrimaryDatabaseDataProvider implements IPrimaryDataProvider {
 	}
 
 	/**
-	 *
 	 * @param ReaderParams $params
 	 * @return array
 	 */
@@ -60,7 +54,6 @@ abstract class PrimaryDatabaseDataProvider implements IPrimaryDataProvider {
 	}
 
 	/**
-	 *
 	 * @param ReaderParams $params
 	 * @return Record[]
 	 */
@@ -83,7 +76,6 @@ abstract class PrimaryDatabaseDataProvider implements IPrimaryDataProvider {
 	}
 
 	/**
-	 *
 	 * @return array
 	 */
 	protected function getDefaultConds() {
@@ -91,7 +83,6 @@ abstract class PrimaryDatabaseDataProvider implements IPrimaryDataProvider {
 	}
 
 	/**
-	 *
 	 * @return array
 	 */
 	protected function getDefaultOptions() {
@@ -107,7 +98,6 @@ abstract class PrimaryDatabaseDataProvider implements IPrimaryDataProvider {
 	}
 
 	/**
-	 *
 	 * @param array &$conds
 	 * @param Filter $filter
 	 */
@@ -161,7 +151,6 @@ abstract class PrimaryDatabaseDataProvider implements IPrimaryDataProvider {
 	}
 
 	/**
-	 *
 	 * @param ReaderParams $params
 	 * @return array
 	 */
@@ -186,7 +175,6 @@ abstract class PrimaryDatabaseDataProvider implements IPrimaryDataProvider {
 	}
 
 	/**
-	 *
 	 * @param ReaderParams $params
 	 * @return array
 	 */
@@ -210,7 +198,6 @@ abstract class PrimaryDatabaseDataProvider implements IPrimaryDataProvider {
 	}
 
 	/**
-	 *
 	 * @param stdClass $row
 	 */
 	abstract protected function appendRowToData( stdClass $row );

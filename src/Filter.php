@@ -2,7 +2,7 @@
 
 namespace MWStake\MediaWiki\Component\DataStore;
 
-abstract class Filter {
+abstract class Filter implements \JsonSerializable {
 	public const COMPARISON_EQUALS = 'eq';
 	public const COMPARISON_NOT_EQUALS = 'neq';
 
@@ -40,31 +40,26 @@ abstract class Filter {
 	public const KEY_VALUE = 'value';
 
 	/**
-	 *
 	 * @var string
 	 */
 	protected $field = '';
 
 	/**
-	 *
 	 * @var mixed
 	 */
 	protected $value = null;
 
 	/**
-	 *
 	 * @var string
 	 */
 	protected $comparison = '';
 
 	/**
-	 *
 	 * @var bool
 	 */
 	protected $applied = false;
 
 	/**
-	 *
 	 * @param array $params
 	 */
 	public function __construct( $params ) {
@@ -89,7 +84,6 @@ abstract class Filter {
 	}
 
 	/**
-	 *
 	 * @return string
 	 */
 	public function getField() {
@@ -97,7 +91,6 @@ abstract class Filter {
 	}
 
 	/**
-	 *
 	 * @return mixed
 	 */
 	public function getValue() {
@@ -105,7 +98,6 @@ abstract class Filter {
 	}
 
 	/**
-	 *
 	 * @return string
 	 */
 	public function getComparison() {
@@ -113,7 +105,6 @@ abstract class Filter {
 	}
 
 	/**
-	 *
 	 * @param \MWStake\MediaWiki\Component\DataStore\Record $dataSet
 	 * @return bool
 	 */
@@ -125,7 +116,6 @@ abstract class Filter {
 	}
 
 	/**
-	 *
 	 * @param bool $applied
 	 */
 	public function setApplied( $applied = true ) {
@@ -133,7 +123,13 @@ abstract class Filter {
 	}
 
 	/**
-	 *
+	 * @return bool
+	 */
+	public function isApplied() {
+		return $this->applied;
+	}
+
+	/**
 	 * @param stdClass[]|array[] $filters
 	 * @return Filter[]
 	 */
@@ -150,7 +146,6 @@ abstract class Filter {
 	}
 
 	/**
-	 *
 	 * @param stdClass|array $filter
 	 * @return Filter
 	 */
@@ -163,4 +158,15 @@ abstract class Filter {
 	 * @return bool
 	 */
 	abstract protected function doesMatch( $dataSet );
+
+	/**
+	 * @return mixed
+	 */
+	public function jsonSerialize(): mixed {
+		return [
+			static::KEY_FIELD => $this->getField(),
+			static::KEY_VALUE => $this->getValue(),
+			static::KEY_COMPARISON => $this->getComparison()
+		];
+	}
 }

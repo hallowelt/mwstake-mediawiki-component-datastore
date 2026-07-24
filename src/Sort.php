@@ -4,7 +4,7 @@ namespace MWStake\MediaWiki\Component\DataStore;
 
 use UnexpectedValueException;
 
-class Sort {
+class Sort implements \JsonSerializable {
 
 	public const KEY_PROPERTY = 'property';
 	public const KEY_DIRECTION = 'direction';
@@ -19,7 +19,6 @@ class Sort {
 	protected $direction = '';
 
 	/**
-	 *
 	 * @param string $property
 	 * @param string $direction
 	 * @throws UnexpectedValueException
@@ -36,7 +35,6 @@ class Sort {
 	}
 
 	/**
-	 *
 	 * @return string
 	 */
 	public function getProperty() {
@@ -44,7 +42,6 @@ class Sort {
 	}
 
 	/**
-	 *
 	 * @return string One of Sort::ASCENDING or Sort::DESCENDING
 	 */
 	public function getDirection() {
@@ -60,7 +57,6 @@ class Sort {
 	}
 
 	/**
-	 *
 	 * @param stdClass[]|array[] $sorts
 	 * @return Sort[]
 	 */
@@ -77,5 +73,15 @@ class Sort {
 			);
 		}
 		return $sortObjects;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function jsonSerialize(): mixed {
+		return [
+			static::KEY_PROPERTY => $this->getProperty(),
+			static::KEY_DIRECTION => $this->getDirection()
+		];
 	}
 }
