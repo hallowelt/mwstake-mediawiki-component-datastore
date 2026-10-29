@@ -2,6 +2,7 @@
 # DataStore for MediaWiki
 
 ## Compatibility
+- \>= `4.0.x` -> MediaWiki 1.47
 - `3.0.x` -> MediaWiki 1.43 + BS 5.2.x
 - `2.0.x` -> MediaWiki 1.43 + BS 5.1.x
 - `1.0.x` -> MediaWiki 1.39
@@ -14,7 +15,7 @@ Require this component in the `composer.json` of your extension:
 ```json
 {
 	"require": {
-		"mwstake/mediawiki-component-datastore": "~3"
+		"mwstake/mediawiki-component-datastore": "~4"
 	}
 }
 ```
