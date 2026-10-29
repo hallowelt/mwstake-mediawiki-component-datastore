@@ -6,6 +6,7 @@ use MediaWiki\Config\Config;
 use MediaWiki\Context\IContextSource;
 use MediaWiki\Context\RequestContext;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\ObjectCache\ObjectCacheFactory;
 use MediaWiki\Title\Title;
 use MediaWiki\User\User;
 use Wikimedia\LightweightObjectStore\ExpirationAwareness;
@@ -29,18 +30,18 @@ abstract class Reader implements IReader {
 	protected $config = null;
 
 	/**
-	 * @var \ObjectCacheFactory
+	 * @var ObjectCacheFactory
 	 */
 	protected $cacheFactory = null;
 
 	/**
 	 * @param IContextSource|null $context
 	 * @param Config|null $config
-	 * @param \ObjectCacheFactory|null $cacheFactory
+	 * @param ObjectCacheFactory|null $cacheFactory
 	 */
 	public function __construct(
 		?IContextSource $context = null, ?Config $config = null,
-		?\ObjectCacheFactory $cacheFactory = null
+		?ObjectCacheFactory $cacheFactory = null
 	) {
 		$this->context = $context;
 		if ( $this->context === null ) {
